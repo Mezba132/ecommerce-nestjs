@@ -9,9 +9,9 @@ export class ProductService {
 
     constructor(@InjectRepository(Product) private productRepository : Repository<Product>) {}
 
-    async createProduct(body : ProductDto) {
+    async createProduct(body : ProductDto, image : any) {
 
-        let { name, price, image, category, brand } = body;
+        let { name, price, category, brand } = body;
 
         let data = {
             name,
@@ -20,18 +20,19 @@ export class ProductService {
             category : category,
             brand : brand
         }
-        
+
+        console.log(data);
 
         let newProduct = this.productRepository.create(data);
         return await this.productRepository.save(newProduct);
     }
 
-    async getProductDetails() {
-        return await this.productRepository.find({
-            relations: {
-                category : true,
-                brand : true
-            },
-        })
+    async getAllProducts() {
+        return await this.productRepository.find()
     }
+
+   async getProductById(id : number) {
+        return await this.productRepository.findOne({ where : { id : id } });
+   }
+
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Category } from '../entity/category.entity'
 import { Brand } from './brand.entity';
 
@@ -13,15 +13,13 @@ export class Product {
     @Column({ type : 'varchar', length : 100, nullable : false })
     price : number
 
-    @Column({ type : 'varchar', length : 150, nullable : true })
-    image : string
+    @Column({ type : 'json', nullable : true })
+    image : JSON
 
-    @OneToOne(() => Category)
-    @JoinColumn()
+    @ManyToOne(() => Category, cat => cat.product)
     category : Category
 
-    @OneToOne(() => Brand)
-    @JoinColumn()
+    @ManyToOne(() => Brand, brand => brand.product)
     brand : Brand
 
 }

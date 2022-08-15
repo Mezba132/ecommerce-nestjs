@@ -5,8 +5,8 @@ export class ProductDto {
     @IsString()
     name : string
 
-    @IsString()
-    image : string
+    // @IsString()
+    // image : string
 
     @IsNotEmpty()
     @IsNumber()

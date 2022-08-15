@@ -5,14 +5,16 @@ import { Customer } from 'src/entity/customer.entity';
 import { Repository } from 'typeorm';
 import { CustomerDto } from './customer.dto';
 const moment = require('moment');
+import { OrderService } from 'src/order/order.service';
 
 @Injectable()
 export class CustomerService {
 
     constructor( 
         @InjectRepository(Customer) private customerRepository : Repository<Customer>,
-        private readonly authService : AuthService
-     ) {}
+        private readonly authService : AuthService,
+        private readonly orderService : OrderService
+    ) {}
 
     async creatCustomer(newCustomer : CustomerDto) {
         try {
@@ -34,8 +36,24 @@ export class CustomerService {
                 }
 
                 const user =  this.customerRepository.create(data);
-                return await this.customerRepository.save(user);
-                
+                let customer = await this.customerRepository.save(user);
+                return this.orderService.create(customer);
+            }
+            else {
+                let data = {
+                    name,
+                    city,
+                    email,
+                    address,
+                    phone,
+                    created_at : moment().format(),
+                    updated_at : moment().format()
+                }
+
+                const user =  this.customerRepository.create(data);
+                let customer = await this.customerRepository.save(user);
+                console.log(customer);
+                return this.orderService.create(customer);
             }
         }
         catch {

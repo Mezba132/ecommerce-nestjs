@@ -8,6 +8,7 @@ import { CustomerModule } from './customer/customer.module';
 import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
 import { BrandModule } from './brand/brand.module';
+import { OrderModule } from './order/order.module';
 import config  from '../ormConfig';
 
 @Module({
@@ -18,7 +19,8 @@ import config  from '../ormConfig';
     CustomerModule,
     ProductModule,
     CategoryModule,
-    BrandModule
+    BrandModule,
+    OrderModule
   ],
   controllers: [AppController],
   providers: [AppService],

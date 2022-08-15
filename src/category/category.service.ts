@@ -13,4 +13,12 @@ export class CategoryService {
         return await this.catRepository.save(newCat);
     }
 
+    async getCategory() {
+        return await this.catRepository.find()
+    }
+
+   async getCategoryById(id : number) {
+        return await this.catRepository.findOne({ where : { id : id } });
+   }
+
 }
